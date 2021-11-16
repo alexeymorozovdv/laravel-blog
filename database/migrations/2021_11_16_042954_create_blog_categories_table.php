@@ -15,7 +15,7 @@ class CreateBlogCategoriesTable extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->default(0)->constrained('blog_categories');
+            $table->foreignId('parent_id')->default(0);
 
             $table->string('slug')->unique();
             $table->string('title');

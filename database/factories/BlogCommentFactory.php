@@ -14,7 +14,10 @@ class BlogCommentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => rand(1, 10),
+            'post_id' => rand(1, 100),
+
+            'body' => $this->faker->text(rand(100, 250))
         ];
     }
 }

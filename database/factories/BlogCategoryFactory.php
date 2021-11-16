@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class BlogCategoryFactory extends Factory
 {
@@ -13,8 +14,14 @@ class BlogCategoryFactory extends Factory
      */
     public function definition()
     {
+        static $i = 1;
+        $title = 'Category ' . $i;
+        $i++;
+
         return [
-            //
+            'parent_id' => ($i > 5) ? rand(1, 4) : 0,
+            'title'     => $title,
+            'slug'      => Str::slug($title),
         ];
     }
 }
