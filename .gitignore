@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/storage/clockwork
+/storage/debugbar
+.phpstorm.meta.php
+_ide_helper.php
