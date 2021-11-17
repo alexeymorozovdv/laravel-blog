@@ -25,7 +25,7 @@ Route::prefix('blog')->group( function () {
         ->names('blog.posts');
 });
 
-// Admin's panel of the blog
+// Admin panel of the blog
 Route::prefix('admin/blog')->group( function () {
     Route::resource('categories', CategoryController::class)
         ->except(['destroy', 'show'])
