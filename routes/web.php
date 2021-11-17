@@ -19,3 +19,7 @@ Route::prefix('blog')->group( function () {
         ->scoped(['post' => 'slug'])
         ->names('blog.posts');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
