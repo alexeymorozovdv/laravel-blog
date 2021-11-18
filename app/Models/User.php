@@ -19,11 +19,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BlogComment[] $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  * @property-read int|null $comments_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BlogPost[] $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
  * @property-read int|null $posts_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
@@ -78,12 +78,12 @@ class User extends Authenticatable
     // Each user has many posts
     public function posts()
     {
-        return $this->hasMany(BlogPost::class);
+        return $this->hasMany(Post::class);
     }
 
     // Each user has many comments
     public function comments()
     {
-        return $this->hasMany(BlogComment::class);
+        return $this->hasMany(Comment::class);
     }
 }

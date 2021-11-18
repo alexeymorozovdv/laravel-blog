@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Models\BlogCategory;
+use App\Models\Category;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -24,11 +24,11 @@ class ExistsOrZero implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return BlogCategory|BlogCategory[]|bool|Collection|Model
+     * @return Category|Category[]|bool|Collection|Model
      */
     public function passes($attribute, $value)
     {
-        return BlogCategory::find($value) ?? $value == 0;
+        return Category::find($value) ?? $value == 0;
     }
 
     /**

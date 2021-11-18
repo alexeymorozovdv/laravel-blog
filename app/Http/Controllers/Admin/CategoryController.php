@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Blog\Admin;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\BlogCategoryCreateRequest;
-use App\Http\Requests\BlogCategoryUpdateRequest;
-use App\Models\BlogCategory;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\CategoryUpdateRequest;
+use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class CategoryController extends AdminBaseController
 {
@@ -22,8 +19,8 @@ class CategoryController extends AdminBaseController
      */
     public function index()
     {
-        return view('blog.admin.categories.index', [
-            'categories' => BlogCategory::getAllWithPaginate()
+        return view('admin.categories.index', [
+            'categories' => Category::getAllWithPaginate()
         ]);
     }
 
@@ -34,27 +31,27 @@ class CategoryController extends AdminBaseController
      */
     public function create()
     {
-        $category = new BlogCategory();
-        $categoryList = BlogCategory::getForSelect();
+        $category = new Category();
+        $categoryList = Category::getForSelect();
 
-        return view('blog.admin.categories.create',
+        return view('admin.categories.create',
             compact('category', 'categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param BlogCategoryCreateRequest $request
+     * @param CategoryCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(BlogCategoryCreateRequest $request): RedirectResponse
+    public function store(CategoryCreateRequest $request): RedirectResponse
     {
         // TODO: Refactor this later
-        $category = (new BlogCategory())->create($request->all());
+        $category = (new Category())->create($request->all());
 
         if ($category) {
             return redirect()
-                ->route('blog.admin.categories.edit', $category->id)
+                ->route('admin.categories.edit', $category->id)
                 ->with(['success' => 'Successfully saved!']);
         } else {
             return back()
@@ -66,25 +63,25 @@ class CategoryController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param BlogCategory $category
+     * @param Category $category
      * @return Application|Factory|View
      */
-    public function edit(BlogCategory $category)
+    public function edit(Category $category)
     {
-        return view('blog.admin.categories.edit', [
+        return view('admin.categories.edit', [
             'category' => $category,
-            'categoryList' => BlogCategory::getForSelect()
+            'categoryList' => Category::getForSelect()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param BlogCategoryUpdateRequest $request
-     * @param BlogCategory $category
+     * @param CategoryUpdateRequest $request
+     * @param Category $category
      * @return RedirectResponse
      */
-    public function update(BlogCategoryUpdateRequest $request, BlogCategory $category): RedirectResponse
+    public function update(CategoryUpdateRequest $request, Category $category): RedirectResponse
     {
         // TODO: Refactor this later
 
@@ -96,7 +93,7 @@ class CategoryController extends AdminBaseController
             $category->update($request->all());
 
             return redirect()
-                ->route('blog.admin.categories.edit', $category->id)
+                ->route('admin.categories.edit', $category->id)
                 ->with(['success' => 'Successfully updated!']);
         } else {
             return back()

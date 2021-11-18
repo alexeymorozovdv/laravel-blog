@@ -22,24 +22,24 @@ use Illuminate\Support\Collection;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read BlogCategory $parentCategory
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BlogPost[] $posts
+ * @property-read Category $parentCategory
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
  * @property-read int|null $posts_count
- * @method static \Database\Factories\BlogCategoryFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory query()
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BlogCategory whereUpdatedAt($value)
+ * @method static \Database\Factories\CategoryFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class BlogCategory extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -80,12 +80,12 @@ class BlogCategory extends Model
     // Each category has many posts
     public function posts(): HasMany
     {
-        return $this->hasMany(BlogPost::class);
+        return $this->hasMany(Post::class);
     }
 
     // Category has a parent category
     public function parentCategory(): BelongsTo
     {
-        return $this->belongsTo(BlogCategory::class, 'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 }

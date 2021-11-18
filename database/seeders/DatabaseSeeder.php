@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\BlogCategory;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserTableSeeder::class);
          \App\Models\User::factory(10)->create();
-         \App\Models\BlogCategory::factory(10)->create();
-         \App\Models\BlogPost::factory(100)->create();
-         \App\Models\BlogComment::factory(150)->create();
+         \App\Models\Category::factory(10)->create();
+         \App\Models\Post::factory(100)->create();
+         \App\Models\Comment::factory(150)->create();
     }
 }

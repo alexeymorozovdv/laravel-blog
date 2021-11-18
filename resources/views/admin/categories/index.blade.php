@@ -6,7 +6,7 @@
             <div class="col-md-12">
 
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-primary mb-3">
+                    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">
                         Create a new category
                     </a>
                 </nav>
@@ -25,11 +25,11 @@
 
                             <tbody>
                             @foreach($categories as $category)
-                                @php /** @var \App\Models\BlogCategory $category */ @endphp
+                                @php /** @var \App\Models\Category $category */ @endphp
                                 <tr>
                                     <td>{{ $category->id }}</td>
                                     <td>
-                                        <a href="{{ route('blog.admin.categories.edit', $category->id) }}">
+                                        <a href="{{ route('admin.categories.edit', $category->id) }}">
                                             {{ $category->title }}
                                         </a>
                                     </td>

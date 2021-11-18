@@ -2,19 +2,19 @@
 
 @section('content')
 
-    @php /** @var \App\Models\BlogCategory $category */ @endphp
+    @php /** @var \App\Models\Category $category */ @endphp
 
-    <form action="{{ route('blog.admin.categories.store') }}" method="post">
+    <form action="{{ route('admin.categories.store') }}" method="post">
         @csrf
         <div class="container">
 
-           @include('blog.admin.categories.includes._errors')
+           @include('admin.categories.includes._errors')
 
-           @include('blog.admin.categories.includes._success_message')
+           @include('admin.categories.includes._success_message')
 
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    @include('blog.admin.categories.includes._item_edit_main_col')
+                    @include('admin.categories.includes._item_edit_main_col')
                 </div>
 
                 <div class="col-md-4">

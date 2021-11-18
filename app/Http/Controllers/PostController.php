@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Blog;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use App\Models\BlogPost;
+use App\Models\Post;
 use Illuminate\Http\Response;
 
 class PostController extends BaseController
@@ -19,8 +19,8 @@ class PostController extends BaseController
      */
     public function index()
     {
-        return view('blog.posts.index', [
-            'posts' => BlogPost::query()->oldest('id')->get(),
+        return view('posts.index', [
+            'posts' => Post::query()->oldest('id')->get(),
         ]);
     }
 
@@ -48,12 +48,12 @@ class PostController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param BlogPost $post
+     * @param Post $post
      * @return Application|Factory|View
      */
-    public function show(BlogPost $post)
+    public function show(Post $post)
     {
-        return view('blog.posts.show', [
+        return view('posts.show', [
             'post' => $post
         ]);
     }

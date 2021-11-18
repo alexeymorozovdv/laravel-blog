@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Blog\Admin\CategoryController;
-use App\Http\Controllers\Blog\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,15 +19,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('blog')->group( function () {
-    Route::resource('posts', PostController::class)
-        ->scoped(['post' => 'slug'])
-        ->names('blog.posts');
-});
+Route::resource('posts', PostController::class)
+    ->scoped(['post' => 'slug'])
+    ->names('posts');
 
 // Admin panel of the blog
-Route::prefix('admin/blog')->group( function () {
+Route::prefix('admin')->group( function () {
     Route::resource('categories', CategoryController::class)
         ->except(['destroy', 'show'])
-        ->names('blog.admin.categories');
+        ->names('admin.categories');
 });
