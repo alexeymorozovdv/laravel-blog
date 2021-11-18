@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\BlogComment
+ * App\Models\Comment
  *
  * @property int $id
  * @property int $user_id
@@ -33,13 +34,13 @@ class Comment extends Model
     use HasFactory;
 
     // Each comment belongs to a post
-    public function post()
+    public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
     }
 
     // Each comment belongs to an author
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }

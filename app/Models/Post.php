@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
- * App\Models\BlogPost
+ * App\Models\Post
  *
  * @property int $id
  * @property int $user_id
@@ -52,36 +52,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Post withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Post withoutTrashed()
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Post getAllWithPaginate()
  */
 class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $appends = ['published_at'];
+
     /**
      * Get all posts with pagination
      *
-     * @param Builder $query
-     * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function scopeGetAllWithPaginate(Builder $query): LengthAwarePaginator
+    public function scopeGetAllWithPaginate(): LengthAwarePaginator
     {
-        $columns = [
-            'id',
-            'title',
-            'slug',
-            'is_published',
-            'published_at',
-            'user_id',
-            'category_id'
-        ];
+        $data = Post::join('users', 'posts.user_id', "=", 'users.id')
+            ->join('categories', 'posts.category_id', "=", 'categories.id')
+            ->select('posts.*',
+                'users.name as user_name',
+                'categories.title as category_title',
+                'categories.id as category_id')
+            ->orderByDesc('id')
+            ->paginate(10);
 
-        $result = $query
-            ->with('author', 'category')
-            ->latest('id')
-            ->paginate(20, $columns);
-
-        return $result;
+        return $data;
     }
 
     /**
@@ -90,7 +85,7 @@ class Post extends Model
      * @param $value
      * @return string
      */
-    public function getPublishedAtAttribute($value)
+    public function getPublishedAtAttribute($value): string
     {
         return $value ? Carbon::parse($value)->format('d M Y H:i:s') : '';
     }

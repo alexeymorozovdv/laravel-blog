@@ -38,12 +38,12 @@
                                     </td>
                                     <td>
                                         <a href="#">
-                                            {{ $post->author->name }}
+                                            {{ $post->user_name }}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.categories.edit', $post->category->id) }}">
-                                            {{ $post->category->title }}
+                                        <a href="{{ route('admin.categories.edit', $post->category_id) }}">
+                                            {{ $post->category_title }}
                                         </a>
                                     </td>
                                     <td>{{ $post->published_at }}</td>

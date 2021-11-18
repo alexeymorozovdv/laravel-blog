@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
- * App\Models\BlogCategory
+ * App\Models\Category
  *
  * @property int $id
  * @property int $parent_id
@@ -38,6 +38,11 @@ use Illuminate\Support\Collection;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static Builder|Category getAllWithPaginate()
+ * @method static Builder|Category getForSelect()
+ * @method static \Illuminate\Database\Query\Builder|Category onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Category withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Category withoutTrashed()
  */
 class Category extends Model
 {
@@ -49,7 +54,6 @@ class Category extends Model
      * Get all categories with pagination
      *
      * @param Builder $query
-     * @param int $perPage
      * @return LengthAwarePaginator
      */
     public function scopeGetAllWithPaginate(Builder $query): LengthAwarePaginator
