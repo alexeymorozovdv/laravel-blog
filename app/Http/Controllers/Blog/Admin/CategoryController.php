@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class CategoryController extends AdminBaseController
 {
@@ -21,7 +23,7 @@ class CategoryController extends AdminBaseController
     public function index()
     {
         return view('blog.admin.categories.index', [
-            'categories' => BlogCategory::query()->paginate(10)
+            'categories' => BlogCategory::query()->paginate(15)
         ]);
     }
 
@@ -32,24 +34,39 @@ class CategoryController extends AdminBaseController
      */
     public function create()
     {
-        return view('blog.admin.categories.create');
+        $category = new BlogCategory();
+        $categoryList = BlogCategory::all();
+
+        return view('blog.admin.categories.create',
+            compact('category', 'categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return string
+     * @param BlogCategoryCreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request)
     {
-        dd(__METHOD__, $request->all());
+        // TODO: Refactor this later
+        $category = (new BlogCategory())->create($request->all());
+
+        if ($category) {
+            return redirect()
+                ->route('blog.admin.categories.edit', $category->id)
+                ->with(['success' => 'Successfully saved!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Save Error"])
+                ->withInput();
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $id
+     * @param BlogCategory $category
      * @return Application|Factory|View
      */
     public function edit(BlogCategory $category)
@@ -65,10 +82,11 @@ class CategoryController extends AdminBaseController
      * @param BlogCategoryUpdateRequest $request
      * @param BlogCategory $category
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
     {
+        // TODO: Refactor this later
+
         if (empty($category)) {
             return back()
                 ->withErrors(['msg' => "Record id=[{$category->id}] not found"])
@@ -78,7 +96,7 @@ class CategoryController extends AdminBaseController
 
             return redirect()
                 ->route('blog.admin.categories.edit', $category->id)
-                ->with(['success' => 'Successfully saved!']);
+                ->with(['success' => 'Successfully updated!']);
         } else {
             return back()
                 ->withErrors(['msg' => "Save error"])

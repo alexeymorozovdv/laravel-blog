@@ -6,7 +6,7 @@ use App\Rules\ExistsOrZero;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class BlogCategoryUpdateRequest extends FormRequest
+class BlogCategoryCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

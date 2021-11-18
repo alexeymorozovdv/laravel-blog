@@ -33,7 +33,6 @@
                                    value="{{ old('slug', $category->slug)}}"
                                    id="slug"
                                    class="form-control"
-                                   required
                             >
                         </div>
 
