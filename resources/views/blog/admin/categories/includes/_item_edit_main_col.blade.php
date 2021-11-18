@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title"></div>
-                <ul class="nav nav-tabs" role=""tablist>
+                <ul class="nav nav-tabs" role="" tablist>
                     <li class="nav-item">
                         <a href="#maindata" class="nav-link-active" data-toggle="tab" role="tab">
                             Main Data
@@ -40,16 +40,14 @@
                         <div class="form-group">
                             <label for="parent_id">Parent</label>
                             <select name="parent_id"
-                                   id="parent_id"
-                                   class="form-control"
-                                    placeholder="Choose a category"
+                                    id="parent_id"
+                                    class="form-control"
                                     required
                             >
                                 <option value="0">None</option>
                                 @foreach($categoryList as $categoryOption)
                                     <option value="{{ $categoryOption->id }}"
-                                        @if($categoryOption->id == $category->parent_id) selected @endif
-                                        @if(old('parent_id', $categoryOption->id)) selected @endif
+                                            @if($categoryOption->id == old('parent_id', $category->parent_id)) selected @endif
                                     >
                                         {{ $categoryOption->title }}
                                     </option>
@@ -60,9 +58,9 @@
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea name="description"
-                                    rows="3"
-                                   id="description"
-                                   class="form-control"
+                                      rows="3"
+                                      id="description"
+                                      class="form-control"
                             >{{ old('description', $category->description) }}</textarea>
                         </div>
 

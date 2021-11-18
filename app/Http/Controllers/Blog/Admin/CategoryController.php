@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -61,13 +62,13 @@ class CategoryController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param BlogCategoryUpdateRequest $request
+     * @param BlogCategory $category
      * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, BlogCategory $category)
+    public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
     {
-//        dd($request, $category);
         if (empty($category)) {
             return back()
                 ->withErrors(['msg' => "Record id=[{$category->id}] not found"])
