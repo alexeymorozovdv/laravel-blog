@@ -16,7 +16,7 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Category's Name</th>
+                                <th>Category's Name (click on title to edit)</th>
                                 <th>Parent</th>
                             </tr>
                             </thead>

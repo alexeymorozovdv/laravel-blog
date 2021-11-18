@@ -18,7 +18,7 @@
                             <label for="title">Title</label>
                             <input name="title"
                                    type="text"
-                                   value="{{ old($category->title) ?? $category->title }}"
+                                   value="{{ old('title', $category->title) }}"
                                    id="title"
                                    class="form-control"
                                    minlength="3"
@@ -30,9 +30,10 @@
                             <label for="slug">Slug</label>
                             <input name="slug"
                                    type="text"
-                                   value="{{ old($category->slug) ?? $category->slug }}"
+                                   value="{{ old('slug', $category->slug)}}"
                                    id="slug"
                                    class="form-control"
+                                   required
                             >
                         </div>
 
@@ -47,7 +48,9 @@
                                 <option value="0">None</option>
                                 @foreach($categoryList as $categoryOption)
                                     <option value="{{ $categoryOption->id }}"
-                                        @if($categoryOption->id == $category->parent_id) selected @endif>
+                                        @if($categoryOption->id == $category->parent_id) selected @endif
+                                        @if(old('parent_id', $categoryOption->id)) selected @endif
+                                    >
                                         {{ $categoryOption->title }}
                                     </option>
                                 @endforeach
@@ -60,7 +63,7 @@
                                     rows="3"
                                    id="description"
                                    class="form-control"
-                            >{{ $category->description }}</textarea>
+                            >{{ old('description', $category->description) }}</textarea>
                         </div>
 
                     </div>

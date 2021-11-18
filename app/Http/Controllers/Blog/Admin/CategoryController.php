@@ -6,6 +6,7 @@ use App\Models\BlogCategory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -62,10 +63,29 @@ class CategoryController extends AdminBaseController
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BlogCategory $category)
     {
-        dd(__METHOD__, $request->all(), $id);
+//        dd($request, $category);
+        if (empty($category)) {
+            return back()
+                ->withErrors(['msg' => "Record id=[{$category->id}] not found"])
+                ->withInput();
+        } elseif ($category) {
+            $category->update($request->all());
+
+            return redirect()
+                ->route('blog.admin.categories.edit', $category->id)
+                ->with(['success' => 'Successfully saved!']);
+        } else {
+            return back()
+                ->withErrors(['msg' => "Save error"])
+                ->withInput();
+        }
     }
+
+//        $data = $request->all();
+//        $result = $item->fill($data)->save();
+
 }
