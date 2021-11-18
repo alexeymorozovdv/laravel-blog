@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('posts', PostController::class)
     ->scoped(['post' => 'slug'])
@@ -28,4 +28,8 @@ Route::prefix('admin')->group( function () {
     Route::resource('categories', CategoryController::class)
         ->except(['destroy', 'show'])
         ->names('admin.categories');
+
+    Route::resource('posts', AdminPostController::class)
+        ->except(['show'])
+        ->names('admin.posts');
 });

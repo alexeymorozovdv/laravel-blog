@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,6 +56,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use HasFactory, SoftDeletes;
+
+    /**
+     * Get all posts with pagination
+     *
+     * @param Builder $query
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function scopeGetAllWithPaginate(Builder $query): LengthAwarePaginator
+    {
+        $columns = [
+            'id',
+            'title',
+            'slug',
+            'is_published',
+            'published_at',
+            'user_id',
+            'category_id'
+        ];
+
+        $result = $query
+            ->with('author', 'category')
+            ->latest('id')
+            ->paginate(20, $columns);
+
+        return $result;
+    }
+
+    /**
+     * Format date
+     *
+     * @param $value
+     * @return string
+     */
+    public function getPublishedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d M Y H:i:s') : '';
+    }
 
     // Each post belongs to an author
     public function author(): BelongsTo

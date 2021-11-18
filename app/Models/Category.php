@@ -50,14 +50,15 @@ class Category extends Model
      *
      * @param Builder $query
      * @param int $perPage
-     * @param string[] $columns
      * @return LengthAwarePaginator
      */
-    public function scopeGetAllWithPaginate(Builder $query, int $perPage = 10, array $columns = ['id', 'title', 'parent_id']): LengthAwarePaginator
+    public function scopeGetAllWithPaginate(Builder $query): LengthAwarePaginator
     {
+        $columns = ['id', 'title', 'parent_id'];
+
         $result = $query
             ->with('parentCategory')
-            ->paginate($perPage, $columns);
+            ->paginate(10, $columns);
 
         return $result;
     }
