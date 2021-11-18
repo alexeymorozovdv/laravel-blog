@@ -23,7 +23,7 @@ class CategoryController extends AdminBaseController
     public function index()
     {
         return view('blog.admin.categories.index', [
-            'categories' => BlogCategory::query()->paginate(15)
+            'categories' => BlogCategory::getAllWithPaginate()
         ]);
     }
 
@@ -35,7 +35,7 @@ class CategoryController extends AdminBaseController
     public function create()
     {
         $category = new BlogCategory();
-        $categoryList = BlogCategory::all();
+        $categoryList = BlogCategory::getForSelect();
 
         return view('blog.admin.categories.create',
             compact('category', 'categoryList'));
@@ -47,7 +47,7 @@ class CategoryController extends AdminBaseController
      * @param BlogCategoryCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(BlogCategoryCreateRequest $request)
+    public function store(BlogCategoryCreateRequest $request): RedirectResponse
     {
         // TODO: Refactor this later
         $category = (new BlogCategory())->create($request->all());
@@ -71,9 +71,10 @@ class CategoryController extends AdminBaseController
      */
     public function edit(BlogCategory $category)
     {
-        $categoryList = BlogCategory::all();
-
-        return view('blog.admin.categories.edit', compact(['category', 'categoryList']));
+        return view('blog.admin.categories.edit', [
+            'category' => $category,
+            'categoryList' => BlogCategory::getForSelect()
+        ]);
     }
 
     /**
@@ -83,7 +84,7 @@ class CategoryController extends AdminBaseController
      * @param BlogCategory $category
      * @return RedirectResponse
      */
-    public function update(BlogCategoryUpdateRequest $request, BlogCategory $category)
+    public function update(BlogCategoryUpdateRequest $request, BlogCategory $category): RedirectResponse
     {
         // TODO: Refactor this later
 
@@ -103,8 +104,4 @@ class CategoryController extends AdminBaseController
                 ->withInput();
         }
     }
-
-//        $data = $request->all();
-//        $result = $item->fill($data)->save();
-
 }

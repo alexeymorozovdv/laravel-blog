@@ -6,7 +6,9 @@
             <div class="col-md-12">
 
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-primary mb-3">Create a new category</a>
+                    <a href="{{ route('blog.admin.categories.create') }}" class="btn btn-primary mb-3">
+                        Create a new category
+                    </a>
                 </nav>
 
                 <div class="card">
@@ -40,6 +42,10 @@
 
                         </table>
                     </div>
+                </div>
+
+                <div class="mt-3">
+                    {{ $categories->links() }}
                 </div>
             </div>
         </div>

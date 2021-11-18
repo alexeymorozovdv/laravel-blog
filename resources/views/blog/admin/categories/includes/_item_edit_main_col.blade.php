@@ -48,7 +48,7 @@
                                     <option value="{{ $categoryOption->id }}"
                                             @if($categoryOption->id == old('parent_id', $category->parent_id)) selected @endif
                                     >
-                                        {{ $categoryOption->title }}
+                                        {{ $categoryOption->id }}. {{ $categoryOption->title }}
                                     </option>
                                 @endforeach
                             </select>

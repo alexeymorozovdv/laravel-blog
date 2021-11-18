@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\BlogCategory
@@ -40,14 +45,46 @@ class BlogCategory extends Model
 
     protected $fillable = ['title', 'slug', 'parent_id', 'description'];
 
+    /**
+     * Get all categories with pagination
+     *
+     * @param Builder $query
+     * @param int $perPage
+     * @param string[] $columns
+     * @return LengthAwarePaginator
+     */
+    public function scopeGetAllWithPaginate(Builder $query, int $perPage = 10, array $columns = ['id', 'title', 'parent_id']): LengthAwarePaginator
+    {
+        $result = $query
+            ->with('parentCategory')
+            ->paginate($perPage, $columns);
+
+        return $result;
+    }
+
+    /**
+     * Get categories list for select
+     *
+     * @param Builder $query
+     * @return Collection
+     */
+    public function scopeGetForSelect(Builder $query): Collection
+    {
+        $result = $query->select('id', 'title')
+            ->toBase()
+            ->get();
+
+        return $result;
+    }
+
     // Each category has many posts
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(BlogPost::class);
     }
 
     // Category has a parent category
-    public function parentCategory()
+    public function parentCategory(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class, 'parent_id');
     }
