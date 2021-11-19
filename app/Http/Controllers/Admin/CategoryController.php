@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoryCreateRequest;
-use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -77,11 +77,11 @@ class CategoryController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param CategoryUpdateRequest $request
+     * @param CategoryRequest $request
      * @param Category $category
      * @return RedirectResponse
      */
-    public function update(CategoryUpdateRequest $request, Category $category): RedirectResponse
+    public function update(CategoryRequest $request, Category $category): RedirectResponse
     {
         // TODO: Refactor this later
 

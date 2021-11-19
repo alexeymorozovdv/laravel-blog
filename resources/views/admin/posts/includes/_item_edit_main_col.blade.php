@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="excerpt">Content</label>
+                            <label for="excerpt">Excerpt</label>
                             <textarea name="excerpt"
                                       rows="7"
                                       id="excerpt"

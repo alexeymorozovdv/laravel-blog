@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application;
@@ -41,10 +42,10 @@ class PostController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param PostRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         // TODO: Refactor this later
         $post = (new Post())->create($request->all());
@@ -77,11 +78,11 @@ class PostController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param PostRequest $request
      * @param Post $post
      * @return RedirectResponse
      */
-    public function update(Request $request, Post $post): RedirectResponse
+    public function update(PostRequest $request, Post $post): RedirectResponse
     {
         // TODO: Refactor this later
 

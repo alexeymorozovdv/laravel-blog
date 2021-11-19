@@ -30,8 +30,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
+                        <label for="title">Author</label>
+                        <input type="text" value="{{ $post->author->name }}" class="form-control" id="title" disabled>
+                    </div>
+                    <div class="form-group">
                         <label for="title">Created</label>
                         <input type="text" value="{{ $post->created_at }}" class="form-control" id="title" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Published</label>
+                        <input type="text" value="{{ $post->published_at }}" class="form-control" id="title" disabled>
                     </div>
                     <div class="form-group">
                         <label for="title">Updated</label>

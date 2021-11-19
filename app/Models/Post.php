@@ -58,9 +58,17 @@ class Post extends Model
     use HasFactory, SoftDeletes;
 
     protected $appends = ['published_at'];
+
+    protected $with = ['author'];
+
     protected $fillable = [
-        'id', 'title', 'slug', 'is_published', 'published_at',
-        'user_id', 'category_id'
+        'title',
+        'slug',
+        'content_raw',
+        'excerpt',
+        'is_published',
+        'published_at',
+        'category_id',
     ];
 
     /**
