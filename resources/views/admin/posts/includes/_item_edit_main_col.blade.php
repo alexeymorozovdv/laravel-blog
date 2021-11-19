@@ -96,6 +96,7 @@
                                    value="0">
 
                             <input name="is_published"
+                                   id="is_published"
                                    class="form-check-input"
                                    type="checkbox"
                                    value="1"

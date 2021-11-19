@@ -118,6 +118,5 @@ class PostController extends AdminBaseController
         return redirect()
             ->route('admin.posts.index')
             ->with(['success' => 'Successfully deleted!']);
-
     }
 }

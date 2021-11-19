@@ -13,17 +13,8 @@ class PostObserver
      */
     public function saving(Post $post): void
     {
-        // If there isn't a slug, then create one from the title
-        if(empty($post->slug)) $post->slug = Str::slug($post->title, '-');
-
-        // If post wasn't published and 'published' checkbox is checked, fill the 'published_at' field
-        if(empty($post->published_at) && $post->is_published) {
-            $post->published_at = Carbon::now();
-        }
-
-        // Convert markdown to html
-        // Illuminate\Mail\Markdown::parse()
-        $post->content_html = $post->content_raw;
+        $this->setPublishDate($post);
+        $this->convertMarkdownToHtml($post);
     }
 
     /**
@@ -31,7 +22,39 @@ class PostObserver
      */
     public function creating(Post $post)
     {
-        // set an author for the new post
+        $this->setAuthor($post);
+    }
+
+    /**
+     * If post wasn't published and 'published' checkbox is checked, fill the 'published_at' field
+     *
+     * @param Post $post
+     */
+    private function setPublishDate(Post $post)
+    {
+        if (empty($post->published_at) && $post->is_published) {
+            $post->published_at = Carbon::now();
+        }
+    }
+
+    /**
+     * Convert markdown to html
+     *
+     * @param Post $post
+     */
+    private function convertMarkdownToHtml(Post $post)
+    {
+        // Illuminate\Mail\Markdown::parse()
+        $post->content_html = $post->content_raw;
+    }
+
+    /**
+     * set an author for the new post
+     *
+     * @param Post $post
+     */
+    private function setAuthor(Post $post)
+    {
         // $post->user_id = auth()->id();
         $post->user_id = 1;
     }
