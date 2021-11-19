@@ -8,9 +8,7 @@
         @csrf
         <div class="container">
 
-           @include('admin.categories.includes._errors')
-
-           @include('admin.categories.includes._success_message')
+            @include('admin.partials._result_messages')
 
             <div class="row justify-content-center">
                 <div class="col-md-8">

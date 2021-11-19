@@ -38,7 +38,7 @@
                                     </td>
                                     <td>
                                         <a href="#">
-                                            {{ $post->user_name }}
+                                            {{ $post->author_name }}
                                         </a>
                                     </td>
                                     <td>

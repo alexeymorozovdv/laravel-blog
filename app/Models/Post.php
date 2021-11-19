@@ -52,27 +52,39 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Query\Builder|Post withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Post withoutTrashed()
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|Post getAllWithPaginate()
  */
 class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $appends = ['published_at'];
+    protected $fillable = [
+        'id', 'title', 'slug', 'is_published', 'published_at',
+        'user_id', 'category_id'
+    ];
 
     /**
      * Get all posts with pagination
      *
      * @return LengthAwarePaginator
      */
-    public function scopeGetAllWithPaginate(): LengthAwarePaginator
+    public static function getAllWithPaginate(): LengthAwarePaginator
     {
+        $columns = [
+            'posts.id',
+            'posts.title',
+            'posts.slug',
+            'is_published',
+            'published_at',
+            'user_id',
+            'category_id',
+            'categories.title as category_title',
+            'users.name as author_name'
+        ];
+
         $data = Post::join('users', 'posts.user_id', "=", 'users.id')
             ->join('categories', 'posts.category_id', "=", 'categories.id')
-            ->select('posts.*',
-                'users.name as user_name',
-                'categories.title as category_title',
-                'categories.id as category_id')
+            ->select($columns)
             ->orderByDesc('id')
             ->paginate(10);
 
