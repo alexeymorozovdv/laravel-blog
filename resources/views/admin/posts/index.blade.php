@@ -21,9 +21,9 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Title</th>
                                 <th>Author</th>
                                 <th>Category</th>
+                                <th>Title</th>
                                 <th>Published At</th>
                             </tr>
                             </thead>
@@ -35,11 +35,6 @@
 
                                     <td>{{ $post->id }}</td>
                                     <td>
-                                        <a href="{{ route('admin.posts.edit', $post->id) }}">
-                                            {{ $post->title }}
-                                        </a>
-                                    </td>
-                                    <td>
                                         <a href="#">
                                             {{ $post->author_name }}
                                         </a>
@@ -47,6 +42,11 @@
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $post->category_id) }}">
                                             {{ $post->category_title }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.posts.edit', $post->id) }}">
+                                            {{ $post->title }}
                                         </a>
                                     </td>
                                     <td>{{ $post->published_at }}</td>

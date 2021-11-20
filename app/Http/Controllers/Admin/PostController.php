@@ -45,7 +45,7 @@ class PostController extends AdminBaseController
      * @param PostRequest $request
      * @return RedirectResponse
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request): RedirectResponse
     {
         // TODO: Refactor this later
         $post = (new Post())->create($request->all());
@@ -53,7 +53,7 @@ class PostController extends AdminBaseController
         if ($post) {
             return redirect()
                 ->route('admin.posts.edit', $post->id)
-                ->with(['success' => 'Successfully saved!']);
+                ->with(['success' => 'Post has been successfully created!']);
         } else {
             return back()
                 ->withErrors(['msg' => "Save Error"])

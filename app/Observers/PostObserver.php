@@ -14,7 +14,7 @@ class PostObserver
     public function saving(Post $post): void
     {
         $this->setPublishDate($post);
-        $this->convertMarkdownToHtml($post);
+        $this->setHTML($post);
     }
 
     /**
@@ -42,14 +42,14 @@ class PostObserver
      *
      * @param Post $post
      */
-    private function convertMarkdownToHtml(Post $post)
+    private function setHTML(Post $post)
     {
         // Illuminate\Mail\Markdown::parse()
         $post->content_html = $post->content_raw;
     }
 
     /**
-     * set an author for the new post
+     * set the author for a new post
      *
      * @param Post $post
      */

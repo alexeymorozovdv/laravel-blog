@@ -102,7 +102,7 @@
                                    value="1"
                                    @if($post->is_published)
                                    checked="checked"
-                                @endif
+                                   @endif
                             >
                             <label class="form-check-label" for="is_published">
                                 Published
