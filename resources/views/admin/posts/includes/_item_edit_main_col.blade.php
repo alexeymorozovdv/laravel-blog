@@ -4,9 +4,13 @@
 
             <div class="card-header">
                 @if($post->is_published)
-                    Published
+                    <div>Published</div>
                 @else
-                    Not Published
+                    <div>Not Published</div>
+                @endif
+
+                @if($post->deleted_at)
+                    <div class="mt-2 text-danger">Deleted</div>
                 @endif
             </div>
 
@@ -15,14 +19,7 @@
                 <div class="card-subtitle mb-2 text-muted"></div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                        <a href="#maindata" class="nav-link active" data-toggle="tab" role="tab">
-                            Main Data
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#adddata" class="nav-link" data-toggle="tab" role="tab">
-                            Additional Data
-                        </a>
+                        Main Data
                     </li>
                 </ul>
                 <br>
@@ -102,7 +99,7 @@
                                    value="1"
                                    @if($post->is_published)
                                    checked="checked"
-                                   @endif
+                                @endif
                             >
                             <label class="form-check-label" for="is_published">
                                 Published

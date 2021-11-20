@@ -25,7 +25,6 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-//            dd($this->route('post')->id);
         return [
             'title'       => ['required', 'min:3', 'max:200', 'unique:posts,title,'.(optional($this->post)->id ?: 'NULL')],
             'slug'        => ['max:200', 'unique:posts,slug,'.(optional($this->post)->id ?: 'NULL')],

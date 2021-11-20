@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -75,15 +79,40 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Each user has many posts
-    public function posts()
+    /**
+     * Get all users with pagination
+     *
+     * @return LengthAwarePaginator
+     */
+    public static function getAllWithPaginate(): LengthAwarePaginator
+    {
+        $columns = [
+            'id', 'name', 'email', 'created_at'
+        ];
+
+        $data = User::select($columns)
+            ->withCount(['posts', 'comments'])
+            ->orderBy('id')
+            ->paginate(10);
+
+        return $data;
+    }
+
+    /**
+     * Return the user's posts
+     */
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
-    // Each user has many comments
-    public function comments()
+    /**
+     * Return the user's comments
+     */
+    public function comments(): HasManyThrough
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasManyThrough(Comment::class, Post::class);
     }
+
+
 }

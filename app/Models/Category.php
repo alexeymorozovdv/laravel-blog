@@ -82,6 +82,18 @@ class Category extends Model
         return $result;
     }
 
+    /**
+     * Get parent category's title or 'none'
+     *
+     * @return string
+     */
+    public function getParentTitleAttribute()
+    {
+        $title = $this->parentCategory->title ?? 'none';
+
+        return $title;
+    }
+
     // Each category has many posts
     public function posts(): HasMany
     {

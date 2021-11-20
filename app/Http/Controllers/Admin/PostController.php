@@ -34,9 +34,9 @@ class PostController extends AdminBaseController
     public function create()
     {
         return view('admin.posts.create', [
-                'post' => new Post,
-                'categoryList' => Category::getForSelect()
-            ]);
+            'post' => new Post,
+            'categoryList' => Category::getForSelect()
+        ]);
     }
 
     /**
@@ -64,13 +64,13 @@ class PostController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Post $post
+     * @param $id
      * @return Application|Factory|View
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
         return view('admin.posts.edit', [
-            'post' => $post,
+            'post' => Post::withTrashed()->find($id),
             'categoryList' => Category::getForSelect()
         ]);
     }
@@ -113,10 +113,24 @@ class PostController extends AdminBaseController
      */
     public function destroy(Post $post): RedirectResponse
     {
-        $post->delete();
+        if ($post->deleted_at) {
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
 
-        return redirect()
-            ->route('admin.posts.index')
-            ->with(['success' => 'Successfully deleted!']);
+        return back()->with(['success' => 'Successfully deleted!']);
+    }
+
+    /**
+     * Restore the soft-deleted post
+     *
+     * @return RedirectResponse()
+     */
+    public function restore($id): RedirectResponse
+    {
+        Post::withTrashed()->find($id)->restore();
+
+        return back()->with(['success' => 'Successfully restored!']);;
     }
 }

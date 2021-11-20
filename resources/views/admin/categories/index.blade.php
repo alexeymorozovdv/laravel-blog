@@ -18,7 +18,7 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Category's Name (click on title to edit)</th>
+                                <th>Title</th>
                                 <th>Parent</th>
                             </tr>
                             </thead>
@@ -34,7 +34,7 @@
                                         </a>
                                     </td>
                                     <td @if($category->parent_id == 0) style="color: #a5abaa" @endif>
-                                        {{ $category->parentCategory->title ?? 'none' }}
+                                        {{ $category->parentTitle }}
                                     </td>
                                 </tr>
                             @endforeach

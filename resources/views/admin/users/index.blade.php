@@ -21,38 +21,41 @@
                             <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Author</th>
-                                <th>Category</th>
-                                <th>Title</th>
-                                <th>Published At</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Created At</th>
+                                <th>Number of Posts</th>
+                                <th>Number of Comments</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            @foreach($posts as $post)
-                                @php /** @var \App\Models\Post $post */ @endphp
-                                <tr @if($post->deleted_at) style="background-color: #e8b5b5"
-                                    @elseif(!$post->is_published) style="background-color: #E0E0E0" @endif
-                                >
+                            @foreach($users as $user)
+                                @php /** @var \App\Models\Post $user */ @endphp
+                                <tr>
 
-                                    <td>{{ $post->id }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.users.edit', $post->author->id) }}">
-                                            {{ $post->author_name }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.categories.edit', $post->category_id) }}">
-                                            {{ $post->category_title }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.posts.edit', $post->id) }}">
-                                            {{ $post->title }}
-                                        </a>
-                                    </td>
-                                    <td>{{ $post->published_at }}</td>
+                                    <td>{{ $user->id }}</td>
 
+                                    <td>
+                                        <a href="{{ route('admin.users.edit', $user->id) }}">
+                                            {{ $user->name }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a>
+                                            {{ $user->email }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a>
+                                            {{ $user->created_at }}
+                                        </a>
+                                    </td>
+
+                                    <td>{{ $user->posts_count }}</td>
+                                    <td>{{ $user->comments_count }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -61,11 +64,11 @@
                     </div>
                 </div>
 
-                @if($posts->total() > $posts->count())
+                @if($users->total() > $users->count())
                     <br>
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            {{ $posts->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
                 @endif

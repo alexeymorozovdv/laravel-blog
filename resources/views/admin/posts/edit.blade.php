@@ -22,20 +22,27 @@
         </form>
 
         @if(request()->route()->getName() == 'admin.posts.edit')
-            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
-                @method('DELETE')
-                @csrf
-                <div class="row justify-content-center mt-2">
-                    <div class="col-md-8">
-                        <div class="card card-block">
-                            <div class="card-body ml-auto">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </div>
+            <div class="row justify-content-center mt-2">
+                <div class="col-md-8">
+                    <div class="card card-block flex-row">
+                        <div class="card-body">
+                            <form action="{{ route('admin.posts.restore', $post->id) }}">
+                                <button class="btn btn-success">Restore</button>
+                            </form>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger float-right delete_confirm">
+                                    @if($post->deleted_at) Force Delete @else Delete @endif
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
                 </div>
-            </form>
+                <div class="col-md-4"></div>
+            </div>
         @endif
     </div>
 

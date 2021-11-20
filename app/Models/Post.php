@@ -84,13 +84,15 @@ class Post extends Model
             'posts.slug',
             'is_published',
             'published_at',
+            'posts.deleted_at',
             'user_id',
             'category_id',
             'categories.title as category_title',
             'users.name as author_name'
         ];
 
-        $data = Post::join('users', 'posts.user_id', "=", 'users.id')
+        $data = Post::withTrashed()
+            ->join('users', 'posts.user_id', "=", 'users.id')
             ->join('categories', 'posts.category_id', "=", 'categories.id')
             ->select($columns)
             ->orderByDesc('id')
