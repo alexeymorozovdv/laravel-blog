@@ -20,75 +20,24 @@ class PostController extends BaseController
     public function index()
     {
         return view('posts.index', [
-            'posts' => Post::query()->oldest('id')->get(),
+            'posts' => Post::getAllWithPaginate('no'),
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      *
+     * @param $categoryId
      * @param Post $post
      * @return Application|Factory|View
      */
-    public function show(Post $post)
+    public function show($categoryId, Post $post)
     {
+        $post->comments_count = $post->comments()->count();
+
         return view('posts.show', [
             'post' => $post
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

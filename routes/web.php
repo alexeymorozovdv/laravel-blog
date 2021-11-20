@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\UserController as AdminUserConrtoller;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,28 +21,31 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::resource('categories', PostController::class)
-    ->scoped(['category' => 'slug'])
-    ->names('categories');
+// Categories
+//Route::get('{category:slug}', [PostController::class, 'show'])->name('categories.show');
 
-Route::resource('category.posts', PostController::class)
-    ->scoped(['post' => 'slug'])
-    ->names('posts');
+// Posts
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('categories/{category:slug}/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
-Route::resource('category.posts.comments', PostController::class)
-    ->names('comments');
+// Comments
+//Route::resource('category.posts.comments', PostController::class)
+//    ->names('comments');
+//
+//// Users
+Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::get('user/{user}/edit', [PostController::class, 'edit'])->name('users.edit');
+Route::post('user/{user}', [PostController::class, 'update'])->name('users.update');
 
-Route::resource('users', PostController::class)
-    ->names('users');
 
 // Admin panel of the blog
-Route::prefix('admin')->group( function () {
-    // Categories
-    Route::resource('categories', CategoryController::class)
+Route::prefix('admin')->group(function () {
+    // Admin Categories
+    Route::resource('categories', AdminCategoryController::class)
         ->except(['destroy', 'show'])
         ->names('admin.categories');
 
-    // Posts
+    // Admin Posts
     Route::resource('posts', AdminPostController::class)
         ->except(['show'])
         ->names('admin.posts');
@@ -50,12 +53,12 @@ Route::prefix('admin')->group( function () {
     Route::get('posts/restore/{id}', [AdminPostController::class, 'restore'])
         ->name('admin.posts.restore');
 
-    // Users
-    Route::resource('users', UserController::class)
+    // Admin Users
+    Route::resource('users', AdminUserConrtoller::class)
         ->only(['index', 'edit', 'update'])
         ->names('admin.users');
 
-    // Comments
+    // Admin Comments
     Route::resource('comments', CommentController::class)
         ->only(['edit', 'update', 'destroy'])
         ->names('admin.comments');

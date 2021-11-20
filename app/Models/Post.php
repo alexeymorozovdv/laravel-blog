@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\DB;
  * @property-read \App\Models\User $author
  * @property-read \App\Models\Category $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
- * @property-read int|null $comments_count
+ * @property int|null $comments_count
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
@@ -59,8 +59,6 @@ class Post extends Model
 
     protected $appends = ['published_at'];
 
-    protected $with = ['author'];
-
     protected $fillable = [
         'title',
         'slug',
@@ -74,27 +72,33 @@ class Post extends Model
     /**
      * Get all posts with pagination
      *
+     * @param string $with_not_published
      * @return LengthAwarePaginator
      */
-    public static function getAllWithPaginate(): LengthAwarePaginator
+    public static function getAllWithPaginate(string $with_not_published = 'yes'): LengthAwarePaginator
     {
+        $with_not_published == 'yes' ? $with_not_published = 5 : $with_not_published = 0;
+
         $columns = [
             'posts.id',
             'posts.title',
             'posts.slug',
+            'excerpt',
             'is_published',
             'published_at',
             'posts.deleted_at',
             'user_id',
+            'users.name as author_name',
             'category_id',
             'categories.title as category_title',
-            'users.name as author_name'
         ];
 
         $data = Post::withTrashed()
+            ->select($columns)
+            ->withCount('comments')
+            ->where('is_published', '!=', $with_not_published)
             ->join('users', 'posts.user_id', "=", 'users.id')
             ->join('categories', 'posts.category_id', "=", 'categories.id')
-            ->select($columns)
             ->orderByDesc('id')
             ->paginate(10);
 

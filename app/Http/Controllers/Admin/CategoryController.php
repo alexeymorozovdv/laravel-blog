@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
@@ -41,10 +40,10 @@ class CategoryController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param CategoryCreateRequest $request
+     * @param CategoryRequest $request
      * @return RedirectResponse
      */
-    public function store(CategoryCreateRequest $request): RedirectResponse
+    public function store(CategoryRequest $request): RedirectResponse
     {
         // TODO: Refactor this later
         $category = (new Category())->create($request->all());
